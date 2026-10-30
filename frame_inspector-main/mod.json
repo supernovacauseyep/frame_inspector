@@ -1,0 +1,188 @@
+{
+	"geode": "5.10.1",
+	"gd": {
+		"win": "2.2081",
+		"android": "2.2081",
+		"mac": "2.2081",
+		"ios": "2.2081"
+	},
+	"id": "kai.frame-inspector",
+	"name": "Frame Inspector",
+	"version": "v1.3.0",
+	"developer": "Kai",
+	"description": "Load a macro, let the bot measure every click's frame window, then play with the windows shown in the level.",
+	"tags": [
+		"gameplay",
+		"utility",
+		"interface"
+	],
+	"dependencies": {
+		"geode.node-ids": ">=v1.23.3"
+	},
+	"settings": {
+		"display-title": {
+			"type": "title",
+			"name": "Display"
+		},
+		"toggle-overlay": {
+			"type": "keybind",
+			"name": "Show / hide everything",
+			"description": "Hides or shows the markers, counter and hardest list while you play.",
+			"default": "F7",
+			"category": "gameplay"
+		},
+		"count-mode": {
+			"type": "string",
+			"name": "Counter counts",
+			"description": "As you click: each number goes up when you hit that click. Passed this attempt: goes up as you pass the clicks. Whole level: totals.",
+			"default": "As you click",
+			"one-of": [
+				"As you click",
+				"Passed this attempt",
+				"Whole level"
+			]
+		},
+		"counter-rows": {
+			"type": "string",
+			"name": "Counter rows",
+			"description": "Where each counter row starts, in frames. Easier: use the Ranges button in the FI menu.",
+			"default": "1,2,3,4,5,7,9,16"
+		},
+		"counter-max": {
+			"type": "float",
+			"name": "Counter ends at (frames)",
+			"description": "Everything at this many frames or more goes in the last row (e.g. 30 -> '30+'). 0 = use the Max window you scanned with. Can't go above what you scanned.",
+			"default": 0.0,
+			"min": 0.0,
+			"max": 1000.0
+		},
+		"marker-mode": {
+			"type": "string",
+			"name": "Circles",
+			"description": "When you click: a circle with the frame window pops up where you click or release. Always: every circle is shown ahead of time.",
+			"default": "When you click",
+			"one-of": [
+				"When you click",
+				"Always (show ahead)"
+			]
+		},
+		"show-releases": {
+			"type": "bool",
+			"name": "Releases that matter",
+			"description": "Count and show releases, but only the ones that change anything (wave, ship, swing...). Releases with a huge window, like on cube, are always skipped.",
+			"default": true
+		},
+		"marker-scale": {
+			"type": "float",
+			"name": "Marker size",
+			"default": 1.0,
+			"min": 0.3,
+			"max": 3.0,
+			"control": {
+				"slider": true,
+				"slider-step": 0.1,
+				"arrows": false
+			}
+		},
+		"marker-decimals": {
+			"type": "bool",
+			"name": "Decimals on markers",
+			"description": "Show 2.5 instead of 2. Windows under 1 frame always show decimals.",
+			"default": false
+		},
+		"hardest-count": {
+			"type": "int",
+			"name": "Rows in the hardest list",
+			"default": 6,
+			"min": 1,
+			"max": 20
+		},
+		"debug-info": {
+			"type": "bool",
+			"name": "Show click info",
+			"description": "A small line in the bottom left that says what your last click matched (or why it didn't). Handy if circles or dings don't show up.",
+			"default": true
+		},
+		"attempt-banner": {
+			"type": "bool",
+			"name": "1 frames banner",
+			"description": "Every new attempt, show how many 1 frames (and under 1 frame clicks) the level has.",
+			"default": true
+		},
+		"sound-title": {
+			"type": "title",
+			"name": "Ding"
+		},
+		"ding": {
+			"type": "bool",
+			"name": "Ding on hard clicks",
+			"description": "Plays a ding when you hit a click or release (robot, wave, ship...) that's this hard or harder.",
+			"default": true
+		},
+		"ding-max-frames": {
+			"type": "float",
+			"name": "Ding up to (frames)",
+			"description": "1 = only frame perfects (and under). 2 = also 2 frames, etc.",
+			"default": 1.0,
+			"min": 0.25,
+			"max": 64.0
+		},
+		"ding-file": {
+			"type": "file",
+			"name": "Custom ding sound",
+			"description": "Optional: pick your own .ogg/.mp3/.wav instead of the built-in ding.",
+			"default": "",
+			"control": {
+				"dialog": "open",
+				"filters": [
+					{
+						"description": "Sounds",
+						"files": [
+							"*.ogg",
+							"*.mp3",
+							"*.wav"
+						]
+					}
+				]
+			}
+		},
+		"scan-title": {
+			"type": "title",
+			"name": "Scanning"
+		},
+		"scan-releases": {
+			"type": "bool",
+			"name": "Scan releases",
+			"description": "Also measure releases (needed for wave/ship/swing). Turning this off makes scans faster.",
+			"default": true
+		},
+		"extra-survive-ticks": {
+			"type": "int",
+			"name": "Extra survive ticks",
+			"description": "A shifted click must keep you alive until your next click happens, plus this many ticks.",
+			"default": 0,
+			"min": 0,
+			"max": 480
+		},
+		"fast-scan": {
+			"type": "bool",
+			"name": "Fast scan",
+			"description": "Skip drawing level objects while the bot fast-forwards. Turn off if a scan behaves differently from normal play.",
+			"default": true
+		},
+		"scan-budget-ms": {
+			"type": "float",
+			"name": "Scan time per frame (ms)",
+			"description": "How long the bot works each frame. Higher = faster scan but laggier screen.",
+			"default": 14.0,
+			"min": 2.0,
+			"max": 200.0
+		}
+	},
+	"resources": {
+		"files": [
+			"ding.ogg",
+			"ding-release.ogg"
+		]
+	}
+}
